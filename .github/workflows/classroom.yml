@@ -1,0 +1,152 @@
+# Autograding for GitHub Classroom. Generated from tests/grading.txt.
+# Total: 100 points.
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: 'Build (compiles)'
+      id: build
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Build (compiles)'
+        setup-command: ''
+        command: 'make -s build/tests'
+        timeout: 2
+        max-score: 5
+    - name: 'No compiler warnings (-Werror)'
+      id: no_warnings
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'No compiler warnings (-Werror)'
+        setup-command: ''
+        command: 'make -s werror'
+        timeout: 2
+        max-score: 5
+    - name: 'List: create empty + destroy'
+      id: list_create_empty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'List: create empty + destroy'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests list_create_empty'
+        timeout: 2
+        max-score: 5
+    - name: 'List: add, first/last, next/prev'
+      id: list_add_order
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'List: add, first/last, next/prev'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests list_add_order'
+        timeout: 2
+        max-score: 10
+    - name: 'List: length (1000 elements)'
+      id: list_length
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'List: length (1000 elements)'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests list_length'
+        timeout: 2
+        max-score: 5
+    - name: 'List: remove first/middle/last/only'
+      id: list_remove
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'List: remove first/middle/last/only'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests list_remove'
+        timeout: 2
+        max-score: 10
+    - name: 'List: average (incl. int overflow)'
+      id: list_average
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'List: average (incl. int overflow)'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests list_average'
+        timeout: 2
+        max-score: 10
+    - name: 'Queue: empty queue'
+      id: queue_empty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Queue: empty queue'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests queue_empty'
+        timeout: 2
+        max-score: 5
+    - name: 'Queue: FIFO order'
+      id: queue_fifo
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Queue: FIFO order'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests queue_fifo'
+        timeout: 2
+        max-score: 10
+    - name: 'Queue: peek'
+      id: queue_peek
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Queue: peek'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests queue_peek'
+        timeout: 2
+        max-score: 5
+    - name: 'Queue: mixed operations'
+      id: queue_mixed
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Queue: mixed operations'
+        setup-command: ''
+        command: 'make -s build/tests && ./build/tests queue_mixed'
+        timeout: 2
+        max-score: 5
+    - name: 'Memory: no leaks / invalid access (ASan)'
+      id: memory
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Memory: no leaks / invalid access (ASan)'
+        setup-command: ''
+        command: 'make -s asan'
+        timeout: 2
+        max-score: 10
+    - name: 'Rule: no loops / goto / recursion'
+      id: rules
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Rule: no loops / goto / recursion'
+        setup-command: ''
+        command: 'make -s rules && make -s build/tests && ./build/tests list_add_order > /dev/null && ./build/tests queue_fifo > /dev/null'
+        timeout: 2
+        max-score: 15
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        BUILD_RESULTS: "${{steps.build.outputs.result}}"
+        NO_WARNINGS_RESULTS: "${{steps.no_warnings.outputs.result}}"
+        LIST_CREATE_EMPTY_RESULTS: "${{steps.list_create_empty.outputs.result}}"
+        LIST_ADD_ORDER_RESULTS: "${{steps.list_add_order.outputs.result}}"
+        LIST_LENGTH_RESULTS: "${{steps.list_length.outputs.result}}"
+        LIST_REMOVE_RESULTS: "${{steps.list_remove.outputs.result}}"
+        LIST_AVERAGE_RESULTS: "${{steps.list_average.outputs.result}}"
+        QUEUE_EMPTY_RESULTS: "${{steps.queue_empty.outputs.result}}"
+        QUEUE_FIFO_RESULTS: "${{steps.queue_fifo.outputs.result}}"
+        QUEUE_PEEK_RESULTS: "${{steps.queue_peek.outputs.result}}"
+        QUEUE_MIXED_RESULTS: "${{steps.queue_mixed.outputs.result}}"
+        MEMORY_RESULTS: "${{steps.memory.outputs.result}}"
+        RULES_RESULTS: "${{steps.rules.outputs.result}}"
+      with:
+        runners: build,no_warnings,list_create_empty,list_add_order,list_length,list_remove,list_average,queue_empty,queue_fifo,queue_peek,queue_mixed,memory,rules
