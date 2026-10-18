@@ -70,7 +70,7 @@ make rules      # בדיקת החוק: אין לולאות / goto / רקורסי
 2. בראש העמוד הזה לחצו על הכפתור הירוק **Use this template** ← **Create a new repository**.
 3. מלאו:
    - **Owner:** `BlackBiss2026` (לא החשבון הפרטי שלכם!)
-   - **Repository name:** `list-queue-<שם המשתמש שלכם בגיטהאב>`, למשל `list-queue-dana-cohen`
+   - **Repository name:** כל שם שתרצו, למשל `list-queue`
    - **Private**
 4. `git clone` למאגר החדש, ועובדים בו.
 
