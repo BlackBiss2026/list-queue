@@ -1,15 +1,15 @@
-# id | display name | points | command
-# Every test is one step in .github/workflows/classroom.yml.
-build             | Build (compiles)                       | 5  | make -s build/tests
-no_warnings       | No compiler warnings (-Werror)         | 5  | make -s werror
-list_create_empty | List: create empty + destroy           | 5  | make -s build/tests && ./build/tests list_create_empty
-list_add_order    | List: add, first/last, next/prev       | 10 | make -s build/tests && ./build/tests list_add_order
-list_length       | List: length (1000 elements)           | 5  | make -s build/tests && ./build/tests list_length
-list_remove       | List: remove first/middle/last/only    | 10 | make -s build/tests && ./build/tests list_remove
-list_average      | List: average (incl. int overflow)     | 10 | make -s build/tests && ./build/tests list_average
-queue_empty       | Queue: empty queue                     | 5  | make -s build/tests && ./build/tests queue_empty
-queue_fifo        | Queue: FIFO order                      | 10 | make -s build/tests && ./build/tests queue_fifo
-queue_peek        | Queue: peek                            | 5  | make -s build/tests && ./build/tests queue_peek
-queue_mixed       | Queue: mixed operations                | 5  | make -s build/tests && ./build/tests queue_mixed
-memory            | Memory: no leaks / invalid access (ASan) | 10 | make -s asan
-rules             | Rule: no loops / goto / recursion      | 15 | make -s rules && make -s build/tests && ./build/tests list_add_order > /dev/null && ./build/tests queue_fifo > /dev/null
+# id | check name | command
+# Each line is one check. The submission passes only if every check passes.
+build             | Build (compiles)                       | make -s build/tests
+no_warnings       | No compiler warnings (-Werror)         | make -s werror
+list_create_empty | List: create empty + destroy           | make -s build/tests && ./build/tests list_create_empty
+list_add_order    | List: add, first/last, next/prev       | make -s build/tests && ./build/tests list_add_order
+list_length       | List: length (1000 elements)           | make -s build/tests && ./build/tests list_length
+list_remove       | List: remove first/middle/last/only    | make -s build/tests && ./build/tests list_remove
+list_average      | List: average (incl. int overflow)     | make -s build/tests && ./build/tests list_average
+queue_empty       | Queue: empty queue                     | make -s build/tests && ./build/tests queue_empty
+queue_fifo        | Queue: FIFO order                      | make -s build/tests && ./build/tests queue_fifo
+queue_peek        | Queue: peek                            | make -s build/tests && ./build/tests queue_peek
+queue_mixed       | Queue: mixed operations                | make -s build/tests && ./build/tests queue_mixed
+memory            | Memory: no leaks / invalid access (ASan) | make -s asan
+rules             | Rule: no loops / goto / recursion      | make -s rules && make -s build/tests && ./build/tests list_add_order > /dev/null && ./build/tests queue_fifo > /dev/null
